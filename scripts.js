@@ -362,17 +362,18 @@ const reportes = () =>{
 
 //----- Fecha para la tabla-----
 
-const parseDateToStringDom = (date) =>{
-    const day = (`0${date.getDate()}`).slice(-2);
-    const month = (`0${date.getMonth() + 1}`).slice(-2);
-    return `${day}/${month}/${date.getFullYear()}` 
+const parseDateToString = (date) =>{
+    const fecha = new Date(date)
+    const day = (`0${fecha.getDate()}`).slice(-2);
+    const month = (`0${fecha.getMonth() + 1}`).slice(-2);
+    return `${day}/${month}/${fecha.getFullYear()}` 
 }
 
 //----- Completar el cuadro -----
 
 const tablaVentas = () => { document.getElementById('tabla-ventas').innerHTML = ventas.map(function itemVentas(venta){
     return `<tr>
-        <td>${parseDateToStringDom(venta.fecha)}</td>
+        <td>${parseDateToString(venta.fecha)}</td>
         <td>${venta.nombreVendedora}</td>
         <td>${venta.sucursal}</td>
         <td>${venta.componentes.join(' - ')}</td>
@@ -393,7 +394,8 @@ const generateId = () => Math.ceil(Math.random() * 100_000);
 
 const guardarVenta = document.getElementById('guardar-venta').addEventListener('click', () => {
     const nombreVendedora = document.getElementById('nombre-vendedora').value;
-    const fecha = new Date (document.getElementById('fecha-venta').value);
+    const fecha = document.getElementById('fecha-venta').value;
+    console.log(document.getElementById('fecha-venta').value)
     const sucursal = document.getElementById('nombre-sucursal').value;
     const componentes = getOptionSelectedMultiple(document.getElementById('crear-componente'));
     const id = generateId();
@@ -452,11 +454,11 @@ const abrirEditModal = (id) =>{
     const myModal = new bootstrap.Modal(document.getElementById('edit-modal'), {})
     myModal.show();
     
-    venta = ventas.find(venta => venta.id == id);
+    let venta = ventas.find(venta => venta.id == id); 
     document.getElementById('editarNombre').value = venta.nombreVendedora;
-    document.getElementById('editarFecha').value = parseDateToStringDom(venta.fecha);
     document.getElementById('editarSucursal').value = venta.sucursal;
-    setOptionSelectedMultiple(document.getElementById('editarComponentes'),venta.componentes)
+    document.getElementById('editarFecha').value = venta.fecha;
+    setOptionSelectedMultiple(document.getElementById('editarComponentes'), venta.componentes)
     document.getElementById('editarId').value = venta.id;
 }
 
@@ -479,6 +481,7 @@ document.getElementById('guardar-editar-venta').addEventListener('click', ()=>{
 
     const index = ventas.findIndex(venta => venta.id == id);
     ventas[index] = venta
+
     updateDom();
 })
 
@@ -494,14 +497,12 @@ const abrirDeleteModal = (id) =>{
 }
 
 document.getElementById('eliminarVenta').addEventListener("click", ()=>{
-    const myModal = new bootstrap.Modal(document.getElementById('cancelarEliminarVenta'), {})
-    myModal.hide();
-    
     const id =  document.getElementById('deleteId').value;
     const index = ventas.findIndex(venta => venta.id == id);
     if (index != -1){
         ventas.splice(index, 1);
     }
+
     updateDom()
 })
 
