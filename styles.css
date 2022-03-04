@@ -1,0 +1,36 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;700;900&display=swap');
+* {
+    margin:0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    font-family: 'Montserrat', sans-serif;
+    background-color: rgb(241, 238, 234);
+    display: flex;
+    justify-content: space-between;
+
+}
+.encabezado{
+    background-color: cadetblue;
+    border-radius: 5px;
+}
+.estilosTabla{
+    background-color: white;
+    border-radius: 5px;
+}
+.estiloBoton{
+    background-color: rgb(30, 79, 134);
+    border-style:none;
+}
+.fa-pencil-alt{
+    color: rgb(95, 197, 129);
+}
+.fa-trash-alt{
+    color: rgb(158, 6, 6);
+}
+
+.boton{
+    border: transparent;
+    background-color: transparent;
+}

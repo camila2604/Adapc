@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- fontawesome -->
+    <script src="https://kit.fontawesome.com/430e0fa557.js" crossorigin="anonymous"></script>
+    <!-- Style -->
+    <link rel="stylesheet" href="./assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container">
+        <!-- Ventas por sucursal -->
+        <div class=" m-4">
+            <div class="row">
+                <div class="card col-5 mx-auto">
+                    <div class="card-body">
+                        <div class="card-title encabezado p-3">
+                            <h3>Ventas por sucursal</h3>
+                        </div>
+                        <table class="card-text table estilosTabla" >
+                            <thead>
+                                <tr>
+                                    <th>Sucursal</th>
+                                    <th>Total ventas</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabla-por-sucursal"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+        <!--Reportes  -->
+                <div class="card col-5 mx-auto">
+                    <div class="card-body">
+                        <div class="card-title encabezado p-3">
+                        <h3>Reportes</h3>
+                        </div>
+                        <div class="card-text"> 
+                            <div class="m-3">Productos estrella: <b id="producto-estrella"></b></div>
+                            <div class="m-3">Vendedora que más ingresos generó: <b id="vendedora-ingresos"></b></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+<!-- Ventas -->
+        <div class="row">
+            <div class="card container col-11 p-3">
+                <div class="card-body encabezado ">
+                    <div class="card-title row m-0">
+                        <h3 class="col-4">Ventas</h3>
+                            <div class="col-8 d-md-flex justify-content-md-end">
+                                <button class="btn btn-primary estiloBoton" data-bs-toggle="modal" data-bs-target="#exampleModal" type="button" id="boton-venta"> 
+                                <i class="fas fa-plus-circle m-2"> </i>
+                                Nueva venta</button>
+                            </div>
+                    </div>                    
+                </div>
+
+                <div class="card-text">
+                    <table class="table estilosTabla mx-auto">
+                        <thead>
+                            <tr>
+                                <th>Fecha</th>
+                                <th>Vendedora</th>
+                                <th>Sucursal</th>
+                                <th>Componentes</th>
+                                <th>Precio</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabla-ventas"> </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!-- Ventana agregar venta -->    
+    <div class="modal" id="exampleModal" >
+        <div class="modal-dialog" >
+            <div class="modal-content p-4">
+                <div class="modal-title encabezado p-3">
+                    <h3>Agregar venta</h3>
+                </div>
+                <form>
+                    <h4 class="p-2">Vendedora</h4>
+                    <select class="form-select form-select-sm mb-3" id="nombre-vendedora" aria-label=".form-select-sm example">
+                        <option selected></option>
+                        <option value="Ada">Ada</option>
+                        <option value="Grace">Grace</option>
+                        <option value="Hedy">Hedy</option>
+                        <option value="Sheryl">Sheryl</option>
+                    </select>
+                    <h4>Componentes</h4>
+                    <div class="mb-3"> 
+                        <select class="form-select" multiple aria-label="multiple select example" id="crear-componente">
+                            <option value="Monitor GPRS 3000">Monitor GPRS 3000</option>
+                            <option value="Motherboard ASUS 1500">Motherboard ASUS 1500</option>
+                            <option value="Monitor ASC 543">Monitor ASC 543</option>
+                            <option value="Motherboard ASUS 1200">Motherboard ASUS 1200</option>
+                            <option value="Motherboard MZI">Motherboard MZI</option>
+                            <option value="HDD Toyiva">HDD Toyiva</option>
+                            <option value="HDD Wezter Dishital">HDD Wezter Dishital</option>
+                            <option value="RAM Quinston">RAM Quinston</option>
+                            <option value="RAM Quinston Fury">RAM Quinston Fury</option>
+                        </select>
+                    </div>
+                    <h4>Sucursal</h4>
+                    <select class="form-select form-select-sm" id="nombre-sucursal" aria-label=".form-select-sm example">
+                        <option selected></option>
+                        <option value="Caballito">Caballito</option>
+                        <option value="Centro">Centro</option>
+                    </select>
+
+                    <h4 class="p-2">Fecha</h4>
+                    <input type="date" class="form-control" id="fecha-venta">
+
+                    <div class="d-md-flex justify-content-md-end m-3">
+                        <button type="button" class="btn btn-secondary btn-sm m-2" data-bs-dismiss="modal" id="cancelar-venta">Cancelar</button>
+                        <button type="button" class="btn btn-primary btn-sm m-2 estiloBoton" id="guardar-venta">Guardar</button>
+                    </div>
+                </form> 
+            </div>
+        </div>
+    </div>
+
+    <!-- Editar Venta  -->
+    <div class="modal" id="edit-modal" >
+        <div class="modal-dialog">
+            <div class="modal-content p-4">
+                <div class="modal-title encabezado p-3">
+                    <h3>Editar venta</h3>
+                </div>
+                <form>
+                    <h3>Vendedora</h3>
+                    <select class="form-select form-select-sm mb-3" id="editarNombre" aria-label=".form-select-sm example">
+                        <option selected></option>
+                        <option value="Ada">Ada</option>
+                        <option value="Grace">Grace</option>
+                        <option value="Hedy">Hedy</option>
+                        <option value="Sheryl">Sheryl</option>
+                    </select>
+                    <h3>Componentes</h3>
+                    <div class="mb-3"> 
+                        <select class="form-select" id="editarComponentes" multiple aria-label="multiple select example">
+                            <option value="Monitor GPRS 3000">Monitor GPRS 3000</option>
+                            <option value="Motherboard ASUS 1500">Motherboard ASUS 1500</option>
+                            <option value="Monitor ASC 543">Monitor ASC 543</option>
+                            <option value="Motherboard ASUS 1200">Motherboard ASUS 1200</option>
+                            <option value="Motherboard MZI">Motherboard MZI</option>
+                            <option value="HDD Toyiva">HDD Toyiva</option>
+                            <option value="HDD Wezter Dishital">HDD Wezter Dishital</option>
+                            <option value="RAM Quinston">RAM Quinston</option>
+                            <option value="RAM Quinston Fury">RAM Quinston Fury</option>
+                        </select>
+                    </div>
+                    <h3>Sucursal</h3>
+                    <select class="form-select form-select-sm" id="editarSucursal" aria-label=".form-select-sm example">
+                        <option selected></option>
+                        <option value="Caballito">Caballito</option>
+                        <option value="Centro">Centro</option>
+                    </select>
+                    <h4 class="p-2">Fecha</h4>
+                    <input type="date" class="form-control" id="editarFecha">
+                    <div>
+                        <input type="hidden" id="editarId">
+                    </div>
+                    <div class="d-md-flex justify-content-md-end m-3">
+                        <button type="button" class="btn btn-secondary btn-sm m-2" data-bs-dismiss="modal" id="cancelar-editar-venta">Cancelar</button>
+                        <button type="button" class="btn btn-primary btn-sm m-2 estiloBoton" id="guardar-editar-venta">Guardar</button>
+                    </div>
+                </form> 
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Eliminar venta -->
+    <div class="modal" id="delete-modal" >
+        <div class="modal-dialog">
+            <div class="modal-content p-4">
+                <div class="modal-title encabezado p-3">
+                    <h3>Eliminar venta</h3>
+                </div>
+                <div class="m-4">
+                    <h4>¿Estás segura?</h4>
+                    <p>Esta acción no se puede revertir.</p>
+                </div>
+                <div>
+                    <input type="hidden" class="hidden" id="deleteId">
+                </div>
+                <div class="row container">
+                    <div class="d-md-flex justify-content-md-end m-3">
+                        <button type="button" class="btn btn-secondary btn-sm m-2" id="cancelarEliminarVenta">Cancelar</button>
+                        <button type="button" class="btn btn-sm btn-danger m-2" id="eliminarVenta">Eliminar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="./assets/js/bootstrap.min.js"></script>
+    <script src="scripts.js"></script>
+</body>
+</html>
